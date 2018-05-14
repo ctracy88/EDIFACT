@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Map definition that converts Matrix 856 XML canonical to EDIFACT 856 format -->
+<Definition>
+
+    <Variable name="MapperDir" value="/home/matrix/interconnect/res/mapper"/>
+    <Variable name="Inbox" value="${RuntimeMapperDir}/runtime/Kinnerton/orders/in"/>
+    <Variable name="Outbox" value="${RuntimeMapperDir}/runtime/Kinnerton/orders/out"/>
+    <Variable name="PersistentVariables" value="${MapperDir}/runtime/Kinnerton/vars.properties"/>
+    <Variable name="HubInfo" value="${MapperDir}/res/Hubs.xml"/>
+    <Variable name="Profile" value="${MapperDir}/res/Kinnerton-Profile.xml"/>
+ 
+	<!-- Filter to be placed on files specific to relationship-->
+    <Source archive="${MapperDir}/archive/Kinnerton/ASN/in" debugDir="${MapperDir}/debug/parsed/Kinnerton/ASN" dir="${Inbox}">
+
+	<Filter type="com.css.base.file.filter.XMLFileFilter">
+		<XPath>/</XPath>
+	</Filter>
+
+	<!-- XML, so no bespoke parsing required -->
+
+
+    </Source>
+
+
+		<Map debugDir="${MapperDir}/debug/transformed/Kinnerton/ASN/finished" 
+			xslt="file:${MapperDir}/xslt/generic/from/Generic-ASN-to-Tesco-ASN.xslt">
+			<Target dir="${Outbox}" ext="tesco.asn.edi" prefix="">
+				<Writer type="com.css.base.transform.document.edi.edifact.EdifactDocumentWriter"/>
+			</Target>
+		</Map>
+
+
+</Definition>

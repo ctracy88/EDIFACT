@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Map definition that converts Matrix ASN XML canonical to EDIFACT INVOIC format -->
+<Definition>
+
+    <Variable name="MapperDir" value="/home/matrix/interconnect/res/mapper"/>
+    <Variable name="Inbox" value="${RuntimeMapperDir}/runtime/${CustomerProfileId}/invoic/in"/>
+    <Variable name="Outbox" value="${RuntimeMapperDir}/runtime/${CustomerProfileId}/invoic/out"/>
+
+    <!--
+    <Variable name="PersistentVariables" value="${MapperDir}/runtime/${CustomerProfileId}/vars.properties"/>
+    -->
+ 
+	<!-- Filter to be placed on files specific to relationship-->
+    <Source dir="${Inbox}"
+			archive="${MapperDir}/archive/${CustomerProfileId}/invoic/in" 
+			debugDir="${MapperDir}/debug/parsed/${CustomerProfileId}/invoic">
+
+        <Filter type="com.css.base.file.filter.XMLFileFilter">
+		    <XPath>/</XPath>
+	    </Filter>
+
+	<!-- XML, so no bespoke parsing required -->
+    </Source>
+
+	<Map debugDir="${MapperDir}/debug/transformed/${CustomerProfileId}/invoic/finished" 
+		  xslt="file:${MapperDir}/xslt/generic/from/TC-EDIFACT-Outbound-INVOIC-${TradingPartnerProfileId}.xslt">
+			
+		<Target dir="${Outbox}" ext="edifact" prefix="">
+			<Writer type="com.css.base.transform.document.edi.edifact.EdifactDocumentWriter"/>
+		</Target>
+	</Map>
+</Definition>

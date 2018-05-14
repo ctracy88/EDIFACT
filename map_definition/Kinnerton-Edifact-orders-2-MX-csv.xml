@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!-- <Definition logs="/home/matrix/interconnect/res/mapper/logs/Kinnerton"> -->
+<!-- Map definition that converts EDIFACT to generic Matrix 850 canonical xml -->
+<Definition>
+
+	<Variable name="MapperDir" value="/home/matrix/interconnect/res/mapper"/>
+	<Variable name="Inbox" value="${MapperDir}/runtime/Kinnerton/orders/in"/>
+	<Variable name="Outbox" value="${MapperDir}/runtime/Kinnerton/orders/out"/>
+	<Variable name="PersistentVariables" value="${MapperDir}/runtime/Kinnerton/vars.properties"/>
+
+	<Source dir="${Inbox}" debugDir="${MapperDir}/debug/parsed" archive="${MapperDir}/archive/Kinnerton/Orders">
+
+		<Filter type="com.css.base.file.filter.EdiFileFilter">
+			<Edifact>true</Edifact>
+			<Untdi>false</Untdi>
+			<AnsiX12>false</AnsiX12>
+
+<!--			<AppRef>ORDERS</AppRef>-->
+		</Filter>
+
+		<Loader type="com.css.base.transform.document.edi.edifact.EdifactDocumentLoader" 
+			hTemplate="${MapperDir}/template/Edifact-Order-D96A.xml"/>
+
+	</Source>
+
+	<Map debugDir="${MapperDir}/debug/transformed/Kinnerton/orders/generic" 
+		xslt="file:${MapperDir}/xslt/generic/to/Edifact-Order-to-Generic-Order.xslt">
+	
+	</Map>
+
+
+</Definition>

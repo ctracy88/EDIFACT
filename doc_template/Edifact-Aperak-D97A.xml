@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<UNB>
+	<UNG/>
+		<UNH>
+			<BGM/>
+			<DTM/>
+			<FTX/>
+			<CNT/>
+			<RFF>
+				<DTM/>
+			</RFF>
+			<NAD>
+				<CTA/>
+				<COM/>
+			</NAD>
+			<ERC>
+				<FTX/>
+				<RFF>
+					<FTX/>
+				</RFF>
+			</ERC>
+			<UNT/>
+		</UNH>
+	<UNZ/>	
+</UNB>

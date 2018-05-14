@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<UNB>
+	<UNG/>
+		<UNH>
+			<BGM/>
+			<DTM/>
+			<RFF>
+				<DTM/>
+			</RFF>
+			<NAD/>
+			<FTX/>
+			<SEQ>
+				<PAC>
+					<PCI/>
+				</PAC>
+				<LIN>
+					<PIA/>
+					<IMD/>
+					<RFF/>
+					<LOC/>
+						<CTA/>
+						<COM/>
+					<QTY>
+						<SCC/>
+						<DTM/>
+						<RFF>
+							<DTM/>
+						</RFF>
+					</QTY>
+				</LIN>
+			</SEQ>
+		<UNT/>
+		</UNH>
+	<UNE/>
+	<UNZ/>
+</UNB>

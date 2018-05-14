@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+
+<!--
+  MX Invoice CSV restructuring template.
+-->
+
+<HDR>
+  <AHC/>
+  <TXT/>
+  <LNE><ALC/></LNE>
+  <LINE><ALC/></LINE>
+
+  <LNE01><ALC/></LNE01>
+  <LNE02><ALC/></LNE02>
+  <LNE03><ALC/></LNE03>
+  <LNE04><ALC/></LNE04>
+  <LNE05><ALC/></LNE05>
+  <LNE06><ALC/></LNE06>
+  <LNE07><ALC/></LNE07>
+  <LNE08><ALC/></LNE08>
+  <LNE09><ALC/></LNE09>
+  <LNE10><ALC/></LNE10>
+  <LNE11><ALC/></LNE11>
+  <LNE12><ALC/></LNE12>
+  <LNE13><ALC/></LNE13>
+  <LNE14><ALC/></LNE14>
+  <LNE15><ALC/></LNE15>
+  <LNE16><ALC/></LNE16>
+  <LNE17><ALC/></LNE17>
+  <LNE18><ALC/></LNE18>
+  <LNE19><ALC/></LNE19>
+  <LNE20><ALC/></LNE20>
+  <LNE21><ALC/></LNE21>
+  <LNE22><ALC/></LNE22>
+  <LNE23><ALC/></LNE23>
+  <LNE24><ALC/></LNE24>
+  <LNE25><ALC/></LNE25>
+  <LNE26><ALC/></LNE26>
+  <LNE27><ALC/></LNE27>
+  <LNE28><ALC/></LNE28>
+  <LNE29><ALC/></LNE29>
+  <LNE30><ALC/></LNE30>
+
+  <VAT/>
+
+</HDR>

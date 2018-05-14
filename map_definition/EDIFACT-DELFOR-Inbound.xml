@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!-- Map definition that converts EDIFACT to generic Matrix DELFOR canonical xml -->
+<Definition>
+
+	<Variable name="MapperDir" value="/home/matrix/interconnect/res/mapper"/>
+	<Variable name="Inbox" value="${RuntimeMapperDir}/runtime/${CustomerProfileId}/delfor/in"/>
+	<Variable name="Outbox" value="${RuntimeMapperDir}/runtime/${CustomerProfileId}/delfor/out"/>
+
+    <!--
+	<Variable name="PersistentVariables" value="${MapperDir}/runtime/${CustomerProfileId}/vars.properties"/>
+    -->
+
+	<Source dir="${Inbox}" 
+            archive="${MapperDir}/archive/${CustomerProfileId}/delfor"
+            debugDir="${MapperDir}/debug/parsed/${CustomerProfileId}/delfor" >
+
+		<Filter type="com.css.base.file.filter.EdiFileFilter">
+			<Edifact>true</Edifact>
+			<Untdi>false</Untdi>
+			<AnsiX12>false</AnsiX12>
+
+		</Filter>
+
+		<!-- Places lines in a hierarchical Delfor (header before lines - Edifact structure per version by year)  --> 
+		<Loader type="com.css.base.transform.document.edi.edifact.EdifactDocumentLoader" 
+			    hTemplate="${MapperDir}/template/Edifact-Delfor-${MessageVersion}${MessageRevision}.xml"/>
+
+	</Source>
+
+	<Map debugDir="${MapperDir}/debug/transformed/${CustomerProfileId}/delfor/generic" 
+		 xslt="file:${MapperDir}/xslt/generic/to/TC-EDIFACT-Inbound-DELFOR-${TradingPartnerProfileId}.xslt">
+		
+        <Target dir="${Outbox}" prefix="" ext="xml" append="false" noOutput="true"/>
+	</Map>
+</Definition>

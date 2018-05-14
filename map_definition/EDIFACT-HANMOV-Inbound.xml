@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!-- Map definition that converts EDIFACT to generic Matrix HANMOV canonical xml -->
+<Definition>
+
+	<Variable name="MapperDir" value="/home/matrix/interconnect/res/mapper"/>
+	<Variable name="Inbox" value="${RuntimeMapperDir}/runtime/${CustomerProfileId}/hanmov/in"/>
+	<Variable name="Outbox" value="${RuntimeMapperDir}/runtime/${CustomerProfileId}/hanmov/out"/>
+
+    <!--
+	<Variable name="PersistentVariables" value="${MapperDir}/runtime/${CustomerProfileId}/vars.properties"/>
+    -->
+
+	<Source dir="${Inbox}" 
+            archive="${MapperDir}/archive/${CustomerProfileId}/hanmov"
+            debugDir="${MapperDir}/debug/parsed/${CustomerProfileId}/hanmov" >
+
+		<Filter type="com.css.base.file.filter.EdiFileFilter">
+			<Edifact>true</Edifact>
+			<Untdi>false</Untdi>
+			<AnsiX12>false</AnsiX12>
+
+		</Filter>
+
+		<!-- Places lines in a hierarchical order (header before lines - Edifact structure per version by year)  --> 
+		<Loader type="com.css.base.transform.document.edi.edifact.EdifactDocumentLoader" 
+			    hTemplate="${MapperDir}/template/Edifact-Hanmov-D96A.xml"/>
+
+	</Source>
+
+	<Map debugDir="${MapperDir}/debug/transformed/${CustomerProfileId}/hanmov/generic" 
+		 xslt="file:${MapperDir}/xslt/generic/to/TC-EDIFACT-Inbound-HANMOV-${TradingPartnerProfileId}.xslt">
+		
+        <Target dir="${Outbox}" prefix="" ext="xml" append="false" noOutput="true"/>
+	</Map>
+</Definition>

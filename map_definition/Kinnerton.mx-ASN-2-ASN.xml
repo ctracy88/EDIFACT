@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Map definition that converts Matrix 856 XML canonical to EDIFACT 856 format -->
+<Definition>
+
+    <Variable name="MapperDir" value="/home/matrix/interconnect/res/mapper"/>
+    <Variable name="Inbox" value="${MapperDir}/runtime/Kinnerton/invoices/in"/>
+    <Variable name="Outbox" value="${MapperDir}/runtime/Kinnerton/invoices/out"/>
+    <Variable name="PersistentVariables" value="${MapperDir}/runtime/Kinnerton/vars.properties"/>
+    <Variable name="HubInfo" value="${MapperDir}/res/Hubs.xml"/>
+    <Variable name="Profile" value="${MapperDir}/res/Kinnerton-Profile.xml"/>
+ 
+    <Source archive="${MapperDir}/archive/Kinnerton/ASN/in" debugDir="${MapperDir}/debug/parsed/Kinnerton/ASN" dir="${Inbox}">
+
+
+    </Source>
+
+
+		<Map debugDir="${MapperDir}/debug/transformed/Kinnerton/ASN/finished" 
+			xslt="file:${MapperDir}/xslt/generic/from/Generic-ASN-to-Tesco-ASN.xslt">
+			<Target dir="${Outbox}" ext="tesco.asn.edi" prefix="">
+				<Writer type="com.css.base.transform.document.edi.edifact.EdifactDocumentWriter"/>
+			</Target>
+		</Map>
+
+
+</Definition>

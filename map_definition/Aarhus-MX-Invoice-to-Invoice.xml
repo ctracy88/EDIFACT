@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Definition>
+
+    <Variable name="MapperDir" value="/home/matrix/interconnect/res/mapper"/>
+    <Variable name="Inbox" value="${MapperDir}/runtime/Aarhus/invoices/toProcess"/>
+    <Variable name="Outbox" value="${MapperDir}/runtime/Aarhus/invoices/toSend"/>
+    <Variable name="PersistentVariables" value="${MapperDir}/runtime/Aarhus/vars.properties"/>
+    <Variable name="HubInfo" value="${MapperDir}/res/Hubs.xml"/>
+    <Variable name="Profile" value="${MapperDir}/res/Aarhus-Profile.xml"/>
+ 
+    <Source archive="${MapperDir}/archive/Aarhus/invoices/in" debugDir="${MapperDir}/debug/parsed/Aarhus/invoices" dir="${Inbox}">
+
+		<Filter type="com.css.base.file.filter.FileNameFilter">
+			<IncludeDirs>false</IncludeDirs>
+			<IgnoreCase>true</IgnoreCase> 
+			<Specification>*.csv</Specification>
+		</Filter>
+
+		<Loader		hTemplate="${MapperDir}/template/MX-Invoice.xml"
+				recSep="&#xa;"
+				fieldSep=","
+				titleRecord="false"
+				useColumnNames="false"
+				labelRecords="true"
+				type="com.css.base.transform.document.csv.CSVDocumentLoader"/>
+
+    </Source>
+
+	<Map debugDir="${MapperDir}/debug/transformed/Aarhus/invoices/generic" 
+		xslt="file:${MapperDir}/xslt/generic/to/Aarhus-Masterlink-Invoice-to-Generic-Invoice.xslt">
+
+		<!-- Premier Foods (Taulia)  -->
+		<Map debugDir="${MapperDir}/debug/transformed/Aarhus/invoices/finished/Taulia" 
+			xslt="file:${MapperDir}/xslt/generic/from/Generic-Invoice-to-Taulia-X12-Invoice.xslt">
+			<Condition path="count(/Batch/Invoice) &gt; 0"/>
+			<Condition path="/Batch/Invoice/Customer/EanCode = 'TAULIAT'"/>
+			<Variable name="SenderQualifier" value="ZZ"/>
+			<Target dir="${Outbox}" ext="taulia.inv.edi" prefix="">
+				<Writer type="com.css.base.transform.document.edi.x12.X12DocumentWriter"/>
+			</Target>
+		</Map>
+
+		<!-- Hendersons Foods Service -->
+		<Map debugDir="${MapperDir}/debug/transformed/Aarhus/invoices/finished/Hendersons" 
+			xslt="file:${MapperDir}/xslt/generic/from/Generic-Invoice-to-Untdi-Invoice.xslt">
+			<Condition path="count(/Batch/Invoice) &gt; 0"/>
+			<Condition path="/Batch/Invoice/Customer/EanCode = '5010358270179'"/>
+			<Target dir="${Outbox}" ext="hendersons.inv.edi" prefix="">
+				<Writer type="com.css.base.transform.document.edi.untdi.UntdiDocumentWriter"/>
+			</Target>
+		</Map>
+
+		<!-- Generic Invoice into Generic Credit -->
+		<Map debugDir="${MapperDir}/debug/transformed/Aarhus/invoices/finished" 
+				xslt="file:${MapperDir}/xslt/generic/from/Generic-Invoice-to-Generic-Credit.xslt">
+
+			<Condition path="/Batch/Invoice/InvoiceSummary/Total1 &lt; 0"/>
+
+            	</Map>
+
+
+	</Map>
+
+</Definition>
